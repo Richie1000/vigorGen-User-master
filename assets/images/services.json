@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "shop-app-d00fc",
+  "private_key_id": "0e2804b32f783f80c78482cf2e115b281543b8f3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCJpOBvbQFgJDlF\n/G5LKg8yx7b6gj8qTk7OTDFoxoWut6V2CKHXMp4i1k31J44/wwFMytWU9x4sNfgq\n+n13yzZ6cLcpsCIoWGD2ZOKwociG+IrbG3RB+JJm6gzjglG+5ocfxrXeVtuJck5X\nJQMBv4uDvQk2lfoFnOQakG/IgsxQpuwqh+y2sPLsviqLYxHPFhB6Kjok/cmABo+U\nrFlV8bsdgLmwBd5gnU4Kklo7pEpbDYzSPKkLF4i5AcN/nFKlfhR25KKC5Zq34W+O\n+5kn2XsmYDUYpBOA7AbCOx2XfLF1XFDwa9EvCl/5XrSdp9/2tkqDYDl7lSVztAOt\n9hANXrBNAgMBAAECggEABkdK1+pQYL+zDE00BSIZaJPEwrwdzRYE8QYRG7PKgncg\nCTh7+vv1GKbop9RMRpfkWRaVE+MKl+VFhhHzY5TiZ3osVxUQsDRv0wcBDCHx3eFv\nPAiOW6ACCMdUtSzLNWEAkuN869ppNmWY/mkF/RagP4i053q2pkdLMScB4lLzc05I\nxZPRsXqVL5RPKmgqxyAp5+Sy9jw84SaSFANQR7W71ZEww1PSXZ1Iuld5QtP4P6lU\nSMSVpQouQNkN2ls2pxBkAcjsbcelxENMa6s8+56CO9nrUR4AXRpGfeYGqDixzzov\nvFSC9kGBMGmrBrX5wq34UvQNrcFjGEypHYmxib5LZQKBgQDB6DXvNm2ZCLM+7Jxf\nltYcvTyYgv7LUL31EhCwgv45//B2V9B9OuYYxGjCTxEM0OCcb8VQqMgMo1NSj/j/\nrv0CfwLF63Pm8XGKHtiNyTjARdOrPoIlpkgWE1Syikrc/kO/loXaBX8oAt4jve54\nXfbTB4CTv8NMYkyp9uMPZxMR2wKBgQC1uG4bZY4oOac+sbl+Dzw3NtbQMKpf8pkD\nYZ8uAMPlREBwco0qWrhTiRzMmT+v+x00KmuPiA5/BzMiSYQILdI/OGxm/MvY4Vr+\nck6YKtPQ2tC93T1TYAYHLGXh6P3ukuBpMe/BHJcIUnhklbevk9afVAmoWnaSppXV\nFRWml3pC9wKBgQCeBsK9utvC1iZOZ8Jg3KqOLWLO4CMKSzkkGp7jWz4Ywo6Tw6k0\nBeYz1Q2THaDFkw0aMLTbsVGniwuCw7anmVK00BHQfrysP6TKba0KkCzh9YY1jvG+\nAS/KXeKuxqmQRN+tqdxX/BbO4tdqxYUtL1bSUNDmmGdvPsU/1ubhTJ1r9QKBgQCg\ni2xbsAFD8IudjA7BHFyquzxVemlLk10z649iaTKo3v+/WLT28mdfBgf3in0F0Okg\nKUoV6LJF7+pxJFoNj83sJMFAy56c4ZwuqHZfYZb5MhixZUDE5FTvCX6Jc/rER+cT\niRa0mbmllJbg5pT9/bLj2K8fmaygK6S8OICESdeuSQKBgCVjm/vq3U5Lf6cVDiOa\nR+x5exZVWptsYkcdKYynOMzNg1QfIX7mkichUJP039PbU1kqESl+F6J6k4Vr7uLI\n+aMaa6S82rdBPBLc2T2sYU77zIhuFexVGGgYsmPh3XUL+JLMNkF/TZ9QK3jH8sMy\nkUxE5y/yjw1jJo6iuAwIjP21\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow123@shop-app-d00fc.iam.gserviceaccount.com",
+  "client_id": "116188241736187606678",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow123%40shop-app-d00fc.iam.gserviceaccount.com"
+}
