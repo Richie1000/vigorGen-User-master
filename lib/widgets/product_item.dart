@@ -48,8 +48,9 @@ class ProductItem extends StatelessWidget {
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.grey.shade200.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(20)),
+                color: Colors.grey.shade200.withOpacity(0.5),
+                //borderRadius: BorderRadius.circular(20)
+              ),
               child: GridTileBar(
                 subtitle: Text(
                   "GHS ${product.price}",
