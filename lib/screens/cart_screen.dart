@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget {
   String getCurrency() {
     var format =
         NumberFormat.currency(locale: Platform.localeName, name: 'GHS');
-    print(format);
+    //print(format);
     return format.currencySymbol;
   }
 

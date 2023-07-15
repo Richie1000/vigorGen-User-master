@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,58 +43,69 @@ class ProductItem extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             )),
-        footer: GridTileBar(
-          subtitle: Text(
-            "GHS ${product.price}",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.black87,
-          // leading: Text("GHS ${product.price}", style: TextStyle(
-          //   color: Colors.white
-          // ) ,),
-          // leading: Consumer<Product>(
-          //   builder: (ctx, product, _) => IconButton(
-          //         icon: Icon(
-          //           product.isFavorite ? Icons.favorite : Icons.favorite_border,
-          //         ),
-          //         color: Theme.of(context).accentColor,
-          //         onPressed: () {
-          //           product.toggleFavoriteStatus(
-          //             authData.token,
-          //             authData.userId,
-          //           );
-          //         },
-          //       ),
-          // ),
-          title: Text(
-            product.title,
-            //overflow: TextOv,
-            //textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-          trailing: IconButton(
-            icon: Icon(
-              Icons.shopping_cart,
-            ),
-            onPressed: () {
-              cart.addItem(product.id, product.price, product.title);
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Added item to cart!',
-                  ),
-                  duration: Duration(seconds: 2),
-                  action: SnackBarAction(
-                    label: 'UNDO',
-                    onPressed: () {
-                      cart.removeSingleItem(product.id);
-                    },
-                  ),
+        footer: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade200.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(20)),
+              child: GridTileBar(
+                subtitle: Text(
+                  "GHS ${product.price}",
+                  style: TextStyle(color: Colors.black),
                 ),
-              );
-            },
-            color: Theme.of(context).accentColor,
+                //backgroundColor: Colors.black87,
+                // leading: Text("GHS ${product.price}", style: TextStyle(
+                //   color: Colors.white
+                // ) ,),
+                // leading: Consumer<Product>(
+                //   builder: (ctx, product, _) => IconButton(
+                //         icon: Icon(
+                //           product.isFavorite ? Icons.favorite : Icons.favorite_border,
+                //         ),
+                //         color: Theme.of(context).accentColor,
+                //         onPressed: () {
+                //           product.toggleFavoriteStatus(
+                //             authData.token,
+                //             authData.userId,
+                //           );
+                //         },
+                //       ),
+                // ),
+                title: Text(
+                  product.title,
+                  style: TextStyle(color: Colors.black),
+                  //overflow: TextOv,
+                  //textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
+                trailing: IconButton(
+                  icon: Icon(
+                    Icons.shopping_cart,
+                  ),
+                  onPressed: () {
+                    cart.addItem(product.id, product.price, product.title);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Added item to cart!',
+                        ),
+                        duration: Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: 'UNDO',
+                          onPressed: () {
+                            cart.removeSingleItem(product.id);
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+            ),
           ),
         ),
       ),

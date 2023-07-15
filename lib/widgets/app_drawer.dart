@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/add_attendance_screen.dart';
 import 'package:flutter_complete_guide/screens/add_lab_service.dart';
+import 'package:flutter_complete_guide/screens/new_overview.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/attendance_screen.dart';
@@ -16,6 +17,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).backgroundColor,
       child: Column(
         children: <Widget>[
           AppBar(
@@ -89,14 +91,14 @@ class AppDrawer extends StatelessWidget {
           //   title: Text("Add Attendance"),
           //   onTap: (){Navigator.of(context).pushReplacementNamed(AddAttendancePage.routeName);},
           // ),
-          // Divider(),
-          // ListTile(
-          //   leading: Icon(Icons.check_box),
-          //   title: Text("Attendance"),
-          //   onTap: (){
-          //     Navigator.of(context).pushReplacementNamed(AttendanceScreen.routeName);
-          //   },
-          // ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.check_box),
+            title: Text("Test"),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(NewOverview.routeName);
+            },
+          ),
           Divider(),
           ListTile(
             leading: Icon(Icons.logout),

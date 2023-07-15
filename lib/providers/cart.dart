@@ -38,6 +38,7 @@ class Cart with ChangeNotifier {
     var total = 0.0;
     _items.forEach((key, cartItem) {
       total += cartItem.price * cartItem.quantity;
+      print(total);
     });
     return total;
   }
@@ -80,7 +81,7 @@ class Cart with ChangeNotifier {
     _items.putIfAbsent(
         productId,
         () => CartItem(
-              id: DateTime.now().toString(),
+              id: productId,
               title: title,
               price: price,
               quantity: 1,

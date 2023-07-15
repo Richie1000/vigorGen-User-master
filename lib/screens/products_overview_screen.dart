@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_complete_guide/widgets/disappearing_appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -14,6 +15,7 @@ import '../widgets/search_button.dart';
 import '../widgets/product_shimmer_grid.dart';
 import '../widgets/grid_and_category.dart';
 import './menu_screen.dart';
+import '../widgets/disappearing_appbar.dart';
 
 enum FilterOptions {
   Favorites,
@@ -68,6 +70,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorLight,
         child: Consumer<Cart>(
@@ -85,24 +88,25 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
         ),
       ),
-      appBar: AppBar(
-        //leading: AppDrawer(),
-        title: Text(
-          'MEK Pharmacy',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        actions: [SearchButton()],
-        shadowColor: Colors.white,
-        elevation: 0,
-        bottomOpacity: 0,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-      ),
-      drawer: AppDrawer(),
+      appBar: CustomAppBar(),
+      // AppBar(
+      //   //leading: AppDrawer(),
+      //   title: Text(
+      //     'MEK Pharmacy',
+      //     style: TextStyle(fontWeight: FontWeight.bold),
+      //   ),
+      //   actions: [SearchButton()],
+      //   shadowColor: Colors.white,
+      //   elevation: 0,
+      //   bottomOpacity: 0,
+      //   systemOverlayStyle: SystemUiOverlayStyle.light,
+      // ),
+      //drawer: AppDrawer(),
       body: LiquidPullToRefresh(
           color: Theme.of(context).primaryColor,
           animSpeedFactor: 1.5,
           onRefresh: _refreshHanndler,
-          child: _isLoading ? ShimmerGid() : GridwithCategoryList()),
+          child: _isLoading ? ShimmerGid() : ProductsGrid(false)),
     );
   }
 }

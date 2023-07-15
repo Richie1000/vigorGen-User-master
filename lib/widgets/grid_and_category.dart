@@ -11,15 +11,12 @@ class GridwithCategoryList extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ListOfCategories(),
-                Expanded(child: ProductsGrid(false))
-              ]),
-        ),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ListOfCategories(),
+              Expanded(child: ProductsGrid(false))
+            ]),
       ),
     );
   }

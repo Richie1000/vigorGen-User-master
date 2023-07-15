@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/add_attendance_screen.dart';
 import 'package:flutter_complete_guide/screens/attendance_screen.dart';
+//import 'package:flutter_complete_guide/screens/testscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -30,23 +31,26 @@ import 'screens/lab_request_details_screen.dart';
 import './screens/checkout_screen.dart';
 import './screens/chatbot_screen.dart';
 import './screens/splash_screen.dart';
-import  './screens/add_attendance_screen.dart';
+import './screens/add_attendance_screen.dart';
+//import './screens/testscreen.dart';
+import './screens/new_overview.dart';
 
 const MaterialColor kPrimaryColor = const MaterialColor(
-  0xFFEF9A9A,
+  0xFF673AB7,
   const <int, Color>{
-    50: const Color(0xFFEF9A9A),
-    100: const Color(0xFFEF9A9A),
-    200: const Color(0xFFEF9A9A),
-    300: const Color(0xFFEF9A9A),
-    400: const Color(0xFFEF9A9A),
-    500: const Color(0xFFEF9A9A),
-    600: const Color(0xFFEF9A9A),
-    700: const Color(0xFFEF9A9A),
-    800: const Color(0xFFEF9A9A),
-    900: const Color(0xFFEF9A9A),
+    50: const Color(0xFFEDE7F6),
+    100: const Color(0xFFD1C4E9),
+    200: const Color(0xFFB39DDB),
+    300: const Color(0xFF9575CD),
+    400: const Color(0xFF7E57C2),
+    500: const Color(0xFF673AB7),
+    600: const Color(0xFF5E35B1),
+    700: const Color(0xFF512DA8),
+    800: const Color(0xFF4527A0),
+    900: const Color(0xFF311B92),
   },
 );
+
 bool showSplash = false;
 
 void main() async {
@@ -102,10 +106,9 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
               elevatedButtonTheme: ElevatedButtonThemeData(
-                  style: TextButton.styleFrom(
+                style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor),
-                    
-                    ),
+              ),
               textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(
                 textStyle: TextStyle(color: Colors.purple),
@@ -141,8 +144,10 @@ class MyApp extends StatelessWidget {
                 LabRequestDetailsScreen(),
             CheckOutScreen.routeName: (ctx) => CheckOutScreen(),
             ChatBotScreen.routeName: (ctx) => ChatBotScreen(),
-            AttendanceScreen.routeName:(context) => AttendanceScreen(),
-            AddAttendancePage.routeName:(context) => AddAttendancePage(),
+            AttendanceScreen.routeName: (context) => AttendanceScreen(),
+            AddAttendancePage.routeName: (context) => AddAttendancePage(),
+            NewOverview.routeName: (context) => NewOverview()
+            //TestPage.routeName(context)=> HomePage()
           },
         ),
       ),

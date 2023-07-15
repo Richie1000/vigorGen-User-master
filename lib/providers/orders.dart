@@ -117,6 +117,7 @@ class Orders with ChangeNotifier {
 DateFormat myDateFormat = DateFormat('yyyy-MM-dd');
 var newDate = myDateFormat.format(myDateTime);
     try {
+      print(cartProducts);
       Map<String, dynamic> _cartproducts = {};
       int numberofProducts =cartProducts.length;
 
@@ -124,15 +125,24 @@ var newDate = myDateFormat.format(myDateTime);
 
       //cartProducts.forEach()
       cartProducts.forEach((element) {
+        //print(cartProducts);
         _cartproducts.addAll({'id': element.id, 'price': element.price, 'quantity': element.quantity, 'title': element.title});
         allCartProducts.add(_cartproducts);
+        print(allCartProducts);
       },);
-      print(allCartProducts);
+      //print(allCartProducts);
         var docRef =
             await FirebaseFirestore.instance.collection('orders').add({
           'id': '',
           'price': total,
-          'cartItems': allCartProducts,
+          'cartItems': cartProducts
+            .map((cp) => {
+                  'id': cp.id,
+                  'title': cp.title,
+                  'quantity': cp.quantity,
+                  'price': cp.price,
+                })
+            .toList(),
           'contact': contact,
           'address': address,
           'paymentMethod': payment,

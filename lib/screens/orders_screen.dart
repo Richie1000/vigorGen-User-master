@@ -35,7 +35,7 @@ class OrdersScreen extends StatelessWidget {
               return SpinKitDualRing(color: Theme.of(context).primaryColor);
             }
             if (!ordersSnapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: Text("No Orders!"));
             }
             final loadedOrders = ordersSnapshot.data.docs;
             //print(lab);

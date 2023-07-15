@@ -113,8 +113,8 @@ class _AuthCardState extends State<AuthCard>
   AnimationController _controller;
   Animation<Offset> _slideAnimation;
   Animation<double> _opacityAnimation;
-  final DateTime startTimer = DateTime(2022, 7, 19, 15, 27, 00);
-  final DateTime endTimer = DateTime(2022, 7, 23, 00, 35, 00);
+  final DateTime startTimer = DateTime(2023, 4, 19, 15, 27, 00);
+  final DateTime endTimer = DateTime(2023, 8, 23, 00, 35, 00);
   bool is_visible = true;
   bool obscure = true;
 
@@ -164,11 +164,11 @@ class _AuthCardState extends State<AuthCard>
       // Invalid!
       return;
     }
-    // if (endTimer.isBefore(DateTime.now())){
-    //   _showErrorDialog("Sorry Mate! Time for Testing is Over");
-    //   HapticFeedback.mediumImpact();
-    //   return;
-    // }
+    if (endTimer.isBefore(DateTime.now())) {
+      _showErrorDialog("Sorry Mate! Time for Testing is Over");
+      HapticFeedback.mediumImpact();
+      return;
+    }
     _formKey.currentState.save();
     setState(() {
       _isLoading = true;
