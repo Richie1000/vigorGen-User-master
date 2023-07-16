@@ -34,6 +34,7 @@ import './screens/splash_screen.dart';
 import './screens/add_attendance_screen.dart';
 //import './screens/testscreen.dart';
 import './screens/new_overview.dart';
+import './screens/details_screen.dart';
 
 const MaterialColor kPrimaryColor = const MaterialColor(
   0xFF673AB7,
@@ -146,8 +147,9 @@ class MyApp extends StatelessWidget {
             ChatBotScreen.routeName: (ctx) => ChatBotScreen(),
             AttendanceScreen.routeName: (context) => AttendanceScreen(),
             AddAttendancePage.routeName: (context) => AddAttendancePage(),
-            NewOverview.routeName: (context) => NewOverview()
+            NewOverview.routeName: (context) => NewOverview(),
             //TestPage.routeName(context)=> HomePage()
+            PageProfileBoutique.route: (context) => PageProfileBoutique()
           },
         ),
       ),

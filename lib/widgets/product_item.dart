@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/details_screen.dart';
 import '../screens/product_detail_screen.dart';
-import '../providers/product.dart';
+import '../providers/product.dart' as pr;
 import '../providers/cart.dart';
 import '../providers/auth.dart';
 import '../providers/products.dart';
@@ -18,7 +19,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context, listen: false);
+    final product = Provider.of<pr.Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
     final authData = Provider.of<Auth>(context, listen: false);
     final images =
@@ -29,7 +30,7 @@ class ProductItem extends StatelessWidget {
         child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed(
-                ProductDetailScreen.routeName,
+                PageProfileBoutique.route,
                 arguments: product.id,
               );
             },

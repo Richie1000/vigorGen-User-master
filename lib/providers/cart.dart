@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CartItem {
   final String id;
@@ -53,40 +55,75 @@ class Cart with ChangeNotifier {
       _items.update(
         productId,
         (existingCartItem) => CartItem(
-              id: existingCartItem.id,
-              title: existingCartItem.title,
-              price: existingCartItem.price,
-              quantity: existingCartItem.quantity + 1,
-            ),
+          id: existingCartItem.id,
+          title: existingCartItem.title,
+          price: existingCartItem.price,
+          quantity: existingCartItem.quantity + 1,
+        ),
       );
     } else {
       _items.putIfAbsent(
         productId,
         () => CartItem(
-              id: DateTime.now().toString(),
-              title: title,
-              price: price,
-              quantity: 1,
-            ),
+          id: DateTime.now().toString(),
+          title: title,
+          price: price,
+          quantity: 1,
+        ),
       );
     }
     notifyListeners();
+    HapticFeedback.lightImpact();
   }
+
+  void incrementQuantity(String productId) {
+    if (_items.containsKey(productId)) {
+      _items.update(
+        productId,
+        (existingCartItem) => CartItem(
+          id: existingCartItem.id,
+          title: existingCartItem.title,
+          price: existingCartItem.price,
+          quantity: existingCartItem.quantity + 1,
+        ),
+      );
+      notifyListeners();
+    }
+  }
+
+  void decrementQuantity(String productId) {
+    if (_items.containsKey(productId)) {
+      if (_items[productId].quantity > 1) {
+        _items.update(
+          productId,
+          (existingCartItem) => CartItem(
+            id: existingCartItem.id,
+            title: existingCartItem.title,
+            price: existingCartItem.price,
+            quantity: existingCartItem.quantity - 1,
+          ),
+        );
+      } else {
+        _items.remove(productId);
+      }
+      notifyListeners();
+    }
+  }
+
   void addLabItem(
     String productId,
     double price,
     String title,
-
-  ){
+  ) {
     _items.putIfAbsent(
-        productId,
-        () => CartItem(
-              id: productId,
-              title: title,
-              price: price,
-              quantity: 1,
-            ),
-      );
+      productId,
+      () => CartItem(
+        id: productId,
+        title: title,
+        price: price,
+        quantity: 1,
+      ),
+    );
   }
 
   void removeItem(String productId) {

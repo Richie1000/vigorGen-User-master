@@ -5,6 +5,7 @@ import 'package:flutter_complete_guide/screens/new_overview.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/attendance_screen.dart';
+import '../screens/details_screen.dart';
 import '../screens/orders_screen.dart';
 import '../screens/user_products_screen.dart';
 import '../providers/auth.dart';
@@ -96,7 +97,8 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.check_box),
             title: Text("Test"),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(NewOverview.routeName);
+              Navigator.of(context)
+                  .pushReplacementNamed(PageProfileBoutique.route);
             },
           ),
           Divider(),

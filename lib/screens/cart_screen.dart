@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -16,7 +15,6 @@ class CartScreen extends StatelessWidget {
   String getCurrency() {
     var format =
         NumberFormat.currency(locale: Platform.localeName, name: 'GHS');
-    //print(format);
     return format.currencySymbol;
   }
 
@@ -42,11 +40,15 @@ class CartScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Chip(
-                    label: Text(
-                      getCurrency() + ' ${cart.totalAmount.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        color:
-                            Theme.of(context).primaryTextTheme.headline6.color,
+                    label: Consumer<Cart>(
+                      builder: (ctx, cart, _) => Text(
+                        "GHS ${cart.totalAmount.toStringAsFixed(2)}",
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6
+                              .color,
+                        ),
                       ),
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
@@ -72,7 +74,9 @@ class CartScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(
-                    context, CheckOutScreen.routeName);
+                  context,
+                  CheckOutScreen.routeName,
+                );
               },
               style: ButtonStyle(
                 backgroundColor:
@@ -82,84 +86,104 @@ class CartScreen extends StatelessWidget {
                 "Proceed",
                 style: TextStyle(fontSize: 20),
               ),
-            )
+            ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(10),
+        color: Colors.grey[200],
+        child: Consumer<Cart>(
+          builder: (ctx, cart, _) => Text(
+            "Total Amount: GHS ${cart.totalAmount.toStringAsFixed(2)}",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
     );
   }
 }
 
-class OrderButton extends StatefulWidget {
-  const OrderButton({
-    Key key,
-    @required this.cart,
-  }) : super(key: key);
+class CartItem extends StatefulWidget {
+  final String id;
+  final String productId;
+  final double price;
+  final int quantity;
+  final String title;
 
-  final Cart cart;
+  CartItem(
+    this.id,
+    this.productId,
+    this.price,
+    this.quantity,
+    this.title,
+  );
 
   @override
-  _OrderButtonState createState() => _OrderButtonState();
+  _CartItemState createState() => _CartItemState();
 }
 
-class _OrderButtonState extends State<OrderButton> {
-  var _isLoading = false;
-
+class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      child: _isLoading ? CircularProgressIndicator() : Text('ORDER NOW'),
-      onPressed: (widget.cart.totalAmount <= 0 || _isLoading)
-          ? null
-          : () async {
-              setState(() {
-                _isLoading = true;
-              });
-              // await Provider.of<Orders>(context, listen: false).addOrder(
-              //   widget.cart.items.values.toList(),
-              //   widget.cart.totalAmount,
-              // );
-              setState(() {
-                _isLoading = false;
-              });
-              widget.cart.clear();
-              showBottomSheet(
-                context: context,
-                builder: (context) => Container(
-                  color: Colors.white70,
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(
-                      Icons.check_circle,
-                      size: 70,
-                      color: Colors.green,
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Center(
-                            child: Text(
-                              "Thanks For shopping with us! \nYou will be notified when we are about to Deliver",
-                              softWrap: true,
-                              style: TextStyle(fontSize: 24),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("OK"))
-                      ],
-                    ),
-                  ]),
+    final cart = Provider.of<Cart>(context, listen: false);
+
+    void incrementQuantity() {
+      cart.incrementQuantity(widget.productId);
+    }
+
+    void decrementQuantity() {
+      cart.decrementQuantity(widget.productId);
+    }
+
+    return Dismissible(
+      key: ValueKey(widget.id),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        cart.removeItem(widget.productId);
+      },
+      background: Container(
+        color: Theme.of(context).errorColor,
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
+          size: 40,
+        ),
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 20),
+        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+      ),
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: ListTile(
+            leading: CircleAvatar(
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: FittedBox(
+                  child: Text('${widget.price.toStringAsFixed(2)}'),
                 ),
-              );
-            },
-      //textColor: Theme.of(context).primaryColor,
+              ),
+            ),
+            title: Text(widget.title),
+            subtitle: Text('Total: GHS ${widget.price * widget.quantity}'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.remove),
+                  onPressed: decrementQuantity,
+                ),
+                Text(widget.quantity.toString()),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: incrementQuantity,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
