@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/screens/category_product_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/products.dart';
@@ -26,7 +27,7 @@ class ProductsGrid extends StatelessWidget {
               Image.asset('assets/images/discount2.jpg'),
             ],
             options: CarouselOptions(
-              aspectRatio: 16 / 9,
+              aspectRatio: 21 / 9,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               enlargeCenterPage: true,
@@ -44,7 +45,7 @@ class ProductsGrid extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height / 8,
+                height: MediaQuery.of(context).size.height / 10,
                 width: MediaQuery.of(context).size.width,
                 child: ListView(scrollDirection: Axis.horizontal, children: [
                   CategoryItem(
@@ -63,12 +64,24 @@ class ProductsGrid extends StatelessWidget {
                     categoryImage: 'assets/images/aphrodisiac.jpg',
                     categoryName: 'Aphrodisiac',
                   ),
+                  CategoryItem(
+                    categoryImage: 'assets/images/pregnancy.png',
+                    categoryName: 'Pregnancy',
+                  ),
+                  CategoryItem(
+                    categoryImage: 'assets/images/kids_drug.png',
+                    categoryName: 'Kids',
+                  ),
+                  CategoryItem(
+                    categoryImage: 'assets/images/cosmetics.png',
+                    categoryName: 'Cosmetics',
+                  ),
                 ]),
               ),
             ],
           ),
           //SizedBox(height: 10),
-          SizedBox(height: 10),
+          //SizedBox(height: 10),
           GridView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -105,7 +118,12 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Handle category tap
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => CategoryProductScreen(categoryName),
+          ),
+        );
       },
       child: Container(
         width: MediaQuery.of(context).size.width / 3.7,

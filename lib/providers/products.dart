@@ -59,19 +59,20 @@ class Products with ChangeNotifier {
       final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Product(
-          id: prodId,
-          title: prodData['title'],
-          description: prodData['description'],
-          price: prodData['price'],
-          isFavorite:
-              favoriteData == null ? false : favoriteData[prodId] ?? false,
-          imageUrl: prodData['imageUrl'],
-        ));
+            id: prodId,
+            title: prodData['title'],
+            description: prodData['description'],
+            price: prodData['price'],
+            isFavorite:
+                favoriteData == null ? false : favoriteData[prodId] ?? false,
+            imageUrl: prodData['imageUrl'],
+            category: prodData['category']));
       });
       _items = loadedProducts;
       _searchProducts = loadedProducts;
       notifyListeners();
     } catch (error) {
+      print(error);
       throw (error);
     }
   }
@@ -168,5 +169,100 @@ class Products with ChangeNotifier {
 
   String userID() {
     return userId;
+  }
+
+  // List<Product> fetchProductsByCategory(String category) {
+  //   print(_items.where((product) => product.category == category).toList());
+  //   return _items.where((product) => product.category == category).toList();
+  // }
+
+  Future<List<Product>> fetchProductsByCategory(String category) async {
+    final url = Uri.parse(
+        'https://shop-app-d00fc-default-rtdb.firebaseio.com/products.json?orderBy="category"&equalTo="$category"');
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        return [];
+      }
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          price: prodData['price'],
+          imageUrl: prodData['imageUrl'],
+          category: prodData['category'],
+        ));
+      });
+      print(loadedProducts);
+      return loadedProducts;
+    } catch (error) {
+      print(error);
+      throw (error);
+    }
+  }
+
+  Future<void> getProductsByCategory(String category) async {
+    final url = Uri.parse(
+        'https://shop-app-d00fc-default-rtdb.firebaseio.com/products.json?auth=$authToken&orderBy="category"&equalTo="$category"');
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        return;
+      }
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          price: prodData['price'],
+          isFavorite: prodData['isFavorite'],
+          imageUrl: prodData['imageUrl'],
+          category: prodData['category'],
+        ));
+      });
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  Future<List<Product>> getCategorizedProduct(String category) async {
+    var url = Uri.parse(
+        'https://shop-app-d00fc-default-rtdb.firebaseio.com/products/categoryproducts/$category.json?auth=$authToken');
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        return []; // Return an empty list if no data is available
+      }
+
+      // final favoriteResponse = await http.get(
+      //     'https://shop-app-d00fc-default-rtdb.firebaseio.com/userFavourites/$userId.json?auth=$authToken');
+      // final favoriteData = json.decode(favoriteResponse.body);
+
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          price: prodData['price'],
+          //isFavorite: favoriteData == null ? false : favoriteData[prodId] ?? false,
+          imageUrl: prodData['imageUrl'],
+          category: prodData['category'],
+        ));
+      });
+
+      return loadedProducts;
+    } catch (error) {
+      print(error);
+      throw (error);
+    }
   }
 }

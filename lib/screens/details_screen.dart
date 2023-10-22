@@ -76,6 +76,7 @@ class _PageProfileBoutiqueState extends State<PageProfileBoutique> {
   String title;
   String product_description;
   String url;
+  String category;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +91,7 @@ class _PageProfileBoutiqueState extends State<PageProfileBoutique> {
     price = loadedProduct.price;
     product_description = loadedProduct.description;
     url = loadedProduct.imageUrl;
+    category = loadedProduct.category;
     product = Product(
         id: "35346",
         title: "berrylush",
@@ -223,7 +225,7 @@ class _PageProfileBoutiqueState extends State<PageProfileBoutique> {
                     Text(title,
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold)),
-                    Text("Category",
+                    Text(category,
                         style: TextStyle(fontWeight: FontWeight.normal)),
                   ],
                 )),

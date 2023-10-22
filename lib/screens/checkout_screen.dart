@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 
@@ -21,6 +26,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   String address;
   String phoneNumber;
+  String email;
+  String name;
   //var paymentPlatform =  "MTN MobileMoney";
 
   var _isLoading = false;
@@ -38,7 +45,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             Container(
               //height: MediaQuery.of(context).size.height / 2.5,
               child: Lottie.asset("assets/images/delivery_animation.json",
-                   repeat: true),
+                  repeat: true),
             ),
             Row(
               children: [
@@ -72,6 +79,61 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       );
     }
 
+    // void sendmail(String recipientEmail, String subject, String body) async {
+    //   String username = 'noreplymekpharmacy@gmail.com';
+    //   String password = '';
+
+    //   final smtpServer = gmail(username, password);
+    //   final message = Message()
+    //     ..from = Address(username, 'MEK Pharmacy')
+    //     ..recipients.add(recipientEmail)
+    //     ..subject = subject
+    //     ..text = body;
+
+    //   try {
+    //     final sendReport = await send(message, smtpServer);
+    //     //print('Message sent: ${sendReport.sent}');
+    //   } catch (error) {
+    //     print('Error occurred while sending email: $error');
+    //   }
+    // }
+
+    Future<void> sendEmail({String email, String name}) async {
+      print("started");
+      final serviceId = 'service_3wejn9n';
+      final templateId = 'template_2zxdw4b';
+      final userId = 'oQGBt7w0ye8YZPW1a';
+
+      try {
+        final Uri url =
+            Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+        final response = await http.post(
+          url,
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'service_id': serviceId,
+            'template_id': templateId,
+            'user_id': userId,
+            'template_params': {
+              'user_name': name,
+              'user_email': email,
+              'user_subject': 'Order Received Successfully',
+              'user_message':
+                  'Order Received Successfully. It will be dispatched very soon. Thank you for choosing MEK Pharmacy',
+            },
+            'accessToken': 'rEcgTI6R_H4Ood8V07lDs'
+          }),
+        );
+
+        print('Email response status code: ${response.statusCode}');
+        print('Email response body: ${response.body}');
+
+        print("ended");
+      } catch (error) {
+        print('Error occurred while sending email: $error');
+      }
+    }
+
     Future<void> _tryOrder() async {
       if (!_formKey.currentState.validate()) {
         // Invalid!
@@ -88,26 +150,61 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       //   print(value.price);
       //   print(value.title);
       //   print(value.quantity);
-        
+
       // },);
       // print("");
+
+      print(name);
+      print(email);
       await Provider.of<Orders>(context, listen: false).addOrder(
           cart.items.values.toList(),
           cart.totalAmount,
           phoneNumber,
           address,
           paymentPlatform);
-      await Provider.of<Orders>(context,listen: false).addOrderAdmin(
-        cart.items.values.toList(),
+      await Provider.of<Orders>(context, listen: false).addOrderAdmin(
+          cart.items.values.toList(),
           cart.totalAmount,
           phoneNumber,
           address,
-          paymentPlatform);    
+          paymentPlatform);
+      await sendEmail(email: email, name: name);
       setState(() {
         _isLoading = false;
       });
       cart.clear();
       Navigator.pop(context);
+
+      //sendEmail(email: email, name: name);
+      // try {
+      //   // sendEmail(email: email, name: name);
+      //   final serviceId = 'service_3wejn9n';
+      //   final templateId = 'template_2zxdw4b';
+      //   final userId = 'oQGBt7w0ye8YZPW1a';
+      //   final Uri url =
+      //       Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+      //   final response = await http.post(
+      //     url,
+      //     headers: {'Content-Type': 'application/json'},
+      //     body: json.encode({
+      //       'service_id': serviceId,
+      //       'template_id': templateId,
+      //       'user_id': userId,
+      //       'template_params': {
+      //         'user_name': name,
+      //         'user_email': email,
+      //         'user_subject': "Order Received Successfuly",
+      //         'user_message':
+      //             "Order Received Successfully. it will be dispatched very soon. \nThank you for choosing MEK Pharmacy"
+      //       }
+      //     }),
+      //     //response.body
+      //   );
+      //   // sendmail(email, "Order Received",
+      //   //     "Dear $name , \nThank you for choosing MEK Pharmacy and we will Deliver straight to the address provided. \nRegards \nMEK Pharmacy");
+      // } catch (error) {
+      //   print(error);
+      // }
       _showOrderSuccessful();
     }
 
@@ -127,6 +224,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             child: Column(children: [
               Text("Provide Delivery Information",
                   style: TextStyle(fontSize: 20)),
+
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Name'),
+                keyboardType: TextInputType.name,
+                validator: (value) {
+                  if (value.length < 3) {
+                    return "Please provide a valid name";
+                  }
+                  return null;
+                },
+                onSaved: (String value) {
+                  name = value;
+                },
+              ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Phone number'),
                 keyboardType: TextInputType.phone,
@@ -155,6 +266,19 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 },
                 onSaved: (String value) {
                   address = value;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value.length < 7) {
+                    return "Please provide a valid email Address";
+                  }
+                  return null;
+                },
+                onSaved: (String value) {
+                  email = value;
                 },
               ),
               CustomDropDown(),
@@ -277,7 +401,7 @@ class _OrderButtonState extends State<OrderButton> {
               showBottomSheet(
                 context: context,
                 builder: (context) => Container(
-                  width: MediaQuery.of(context).size.width* 0.75,
+                  width: MediaQuery.of(context).size.width * 0.75,
                   color: Colors.white70,
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     Icon(
